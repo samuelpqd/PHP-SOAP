@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<definitions name="Service" targetNamespace="urn:Service" xmlns:typens="urn:Service" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+        <message name="hello"/>
+        <message name="helloResponse">
+                <part name="helloReturn" type="xsd:string"/>
+        </message>
+        <portType name="MeuServicoPortType">
+                <operation name="hello">
+                        <input message="typens:hello"/>
+                        <output message="typens:helloResponse"/>
+                </operation>
+        </portType>
+        <binding name="MeuServicoBinding" type="typens:MeuServicoPortType">
+                <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+                <operation name="hello">
+                        <soap:operation soapAction="urn:MeuServicoAction"/>
+                        <input>
+                                <soap:body namespace="urn:Service" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+                        </input>
+                        <output>
+                                <soap:body namespace="urn:Service" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+                        </output>
+                </operation>
+        </binding>
+        <service name="ServiceService">
+                <port name="MeuServicoPort" binding="typens:MeuServicoBinding">
+                        <soap:address location="http://10.8.33.34/phpsoap/server.php"/>
+                </port>
+        </service>
+</definitions>
